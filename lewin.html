@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Test de Liderazgo - Lewin</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 40px;
+    }
+    form {
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      text-align: center;
+    }
+    .question {
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #006680;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #004d5c;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Test de Liderazgo de Lewin</h1>
+  <form id="lewin-form">
+    <div class="question">
+      <label>1. ¿Cómo tomas decisiones con tu equipo?</label><br>
+      <input type="radio" name="q1" value="A" required> Yo decido y les informo<br>
+      <input type="radio" name="q1" value="D"> Tomamos decisiones en grupo<br>
+      <input type="radio" name="q1" value="L"> Cada quien decide lo suyo<br>
+    </div>
+
+    <div class="question">
+      <label>2. ¿Cómo organizas las tareas?</label><br>
+      <input type="radio" name="q2" value="A" required> Doy instrucciones claras<br>
+      <input type="radio" name="q2" value="D"> Proponemos ideas juntos<br>
+      <input type="radio" name="q2" value="L"> No intervengo mucho<br>
+    </div>
+
+    <button type="submit">Ver resultado</button>
+  </form>
+
+  <script>
+    document.getElementById("lewin-form").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      const respuestas = Array.from(formData.values());
+
+      const conteo = { A: 0, D: 0, L: 0 };
+      respuestas.forEach(v => { if (conteo[v] !== undefined) conteo[v]++; });
+
+      const estilo = Object.keys(conteo).reduce((a, b) => conteo[a] > conteo[b] ? a : b);
+
+      const descripcion = {
+        A: "Estilo Autoritario: Tomas el control y das órdenes claras.",
+        D: "Estilo Democrático: Tomas en cuenta al equipo para decidir.",
+        L: "Estilo Laissez-faire: Das libertad total al grupo."
+      };
+
+      alert(`Tu estilo de liderazgo es: ${descripcion[estilo]}`);
+    });
+  </script>
+
+</body>
+</html>
+
