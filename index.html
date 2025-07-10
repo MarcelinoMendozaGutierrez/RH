@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Test DISC</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 40px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .question {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    button {
+      background-color: #006680;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #004d5c;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Test DISC</h1>
+  <p style="text-align:center;">Contesta seleccionando la opción que mejor te describa.</p>
+
+  <form id="disc-form">
+    <div class="question">
+      <label>1. ¿Cómo te describes mejor?</label>
+      <input type="radio" name="q1" value="D" required> Decidido<br>
+      <input type="radio" name="q1" value="I"> Entusiasta<br>
+      <input type="radio" name="q1" value="S"> Paciente<br>
+      <input type="radio" name="q1" value="C"> Preciso<br>
+    </div>
+
+    <div class="question">
+      <label>2. En un equipo tú prefieres:</label>
+      <input type="radio" name="q2" value="D" required> Tomar decisiones<br>
+      <input type="radio" name="q2" value="I"> Motivar al grupo<br>
+      <input type="radio" name="q2" value="S"> Evitar conflictos<br>
+      <input type="radio" name="q2" value="C"> Seguir procesos<br>
+    </div>
+
+    <button type="submit">Enviar respuestas</button>
+  </form>
+<script>
+  document.getElementById("disc-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(this);
+    const entries = Array.from(formData.entries());
+
+    let csvContent = "Pregunta,Respuesta\n";
+
+    entries.forEach(([key, value], index) => {
+      csvContent += `Pregunta ${index + 1},${value}\n`;
+    });
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    const date = new Date().toISOString().split("T")[0];
+    link.setAttribute("download", `respuestas_DISC_${date}.csv`);
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  });
+</script>
+
+
+</body>
+</html>
+
